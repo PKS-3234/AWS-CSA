@@ -66,3 +66,91 @@ The DNS resolution process involves multiple steps:
 
 This document provides a structured overview of DNS concepts and their relevance in AWS. Next, we will proceed with real-world troubleshooting scenarios to prepare for the AWS Cloud Support Associate role.
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Now, let's go through some real-world DNS troubleshooting scenarios relevant to an AWS Cloud Support Associate role and how to handle them step by step.
+
+1. Website Not Resolving to the Correct IP Address
+Scenario: A user reports that their domain example.com is not resolving correctly, or they are getting an error like "DNS_PROBE_FINISHED_NXDOMAIN" in their browser.
+
+Step-by-step troubleshooting:
+Check Domain Registration & Expiry
+
+Use whois example.com or check on AWS Route 53 to see if the domain is still registered.
+Ensure the domain is not expired.
+Verify DNS Configuration
+
+Use nslookup example.com or dig example.com to check the authoritative name servers.
+Ensure that the domain's NS (Name Server) records are correctly set to Route 53 name servers.
+Check Route 53 Hosted Zone
+
+Open AWS Route 53 Console → Go to Hosted Zones → Find example.com
+Ensure an A Record exists and is pointing to the correct IP address of the web server.
+Check for Propagation Issues
+
+If DNS records were recently updated, it may take time to propagate. Use https://dnschecker.org/ to check if changes are reflected globally.
+Verify TTL (Time-To-Live) Settings
+
+If the TTL is set too high, users may still be seeing outdated DNS records. Reduce TTL for quick updates.
+Clear Local DNS Cache
+
+Ask the user to flush their DNS cache using:
+arduino
+Copy
+Edit
+ipconfig /flushdns  (Windows)  
+sudo systemd-resolve --flush-caches  (Linux)  
+They can also try using a different network or Google DNS (8.8.8.8) to see if the issue is local.
+2. Subdomain Not Resolving
+Scenario: A user has set up a subdomain blog.example.com, but it does not resolve.
+
+Troubleshooting Steps:
+Check for a CNAME or A Record in Route 53
+
+Go to Route 53 → Hosted Zones → example.com
+Ensure that a record exists for blog.example.com. It should either:
+Be an A record pointing to an IP.
+Be a CNAME record pointing to another domain.
+Check Parent Domain's DNS Settings
+
+Ensure that example.com itself is correctly resolving. If the parent domain is misconfigured, the subdomain may also fail.
+Verify Web Server Configuration
+
+If the subdomain is pointed to an EC2 instance, ensure the web server (Nginx, Apache) is configured to handle blog.example.com.
+3. Incorrect SSL Certificate for a Domain
+Scenario: A user reports that their domain secure.example.com is showing an SSL certificate error.
+
+Troubleshooting Steps:
+Check if the Domain is Using an AWS Certificate Manager (ACM) SSL
+
+Open AWS ACM Console
+Verify that the certificate includes secure.example.com.
+Verify Load Balancer Configuration (If Any)
+
+If using an Application Load Balancer (ALB), ensure that the listener for HTTPS (443) is correctly configured.
+Check Certificate Expiry
+
+Run openssl s_client -connect secure.example.com:443 and verify the certificate’s expiration date.
+Check Browser Errors & Logs
+
+Look at the specific browser error message:
+"Certificate not trusted" → Check if it’s issued by a trusted CA.
+"Mismatch error" → Ensure the certificate matches the domain name.
+4. DNS Resolution Works Intermittently
+Scenario: Some users can access the website, while others cannot.
+
+Troubleshooting Steps:
+Check for Multiple A Records (Load Balancer Issue)
+
+If using a Load Balancer, ensure that all backend servers are healthy.
+Check TTL Settings
+
+If TTL is set too high, users may still be using an old cached DNS entry.
+Verify Recursive DNS Server Issues
+
+Ask the user to try dig example.com @8.8.8.8 (Google DNS) to check if their local ISP’s DNS resolver is the problem.
+Check AWS Route 53 Health Checks
+
+Go to Route 53 → Health Checks and verify that all endpoints are reachable.
+
+
