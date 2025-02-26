@@ -12,6 +12,8 @@ When a device sends data, the switch examines the destination MAC address and fo
 Switches create collision domains on each port, and a single broadcast domain by default.   
 In simple terms:
 A switch is like a traffic cop within a single neighborhood, directing traffic between houses on the same street.   
+
+
 Routers:
 
 Function:
