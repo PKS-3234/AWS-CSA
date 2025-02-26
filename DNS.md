@@ -202,5 +202,25 @@ Amazon Route 53 Name Servers: Specific name servers associated with the domain t
 Web Browser: Receives the IP address from the DNS resolver and sends a request to the web server.
 
 Web Server: Located at the provided IP address, responds with the requested website content (e.g., Amazon EC2 instance or S3 bucket).
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Why DNS Uses UDP:
+Efficiency: UDP is a lightweight protocol. Unlike TCP, it doesn't require the overhead of establishing a connection (like the TCP three-way handshake), maintaining a connection, or handling flow control and retransmission of lost packets. This makes UDP faster and more efficient for the quick query-response pattern of DNS.
+
+Low Latency: DNS queries are usually small and need quick responses. UDP can transmit these small packets of data with minimal delay, ensuring a rapid response time, which is crucial for DNS resolution.
+
+Stateless: UDP is a stateless protocol, meaning each query and response is independent of each other. DNS queries and responses don't need to keep track of state, making UDP the perfect fit.
+
+Simple Error Handling: DNS transactions don't need complex error handling. If a query or response is lost, the resolver can simply resend the query. UDP’s simplicity supports this behavior without the need for the more complex error-handling mechanisms of TCP.
+
+When TCP is Used:
+While UDP is the preferred protocol for DNS, there are scenarios where TCP is used:
+
+Large Responses: If a DNS response exceeds 512 bytes, which is the maximum size for a UDP packet, the DNS resolver must switch to TCP to handle the larger response size.
+
+Zone Transfers: DNS zone transfers (the transfer of DNS records from a primary to a secondary DNS server) use TCP to ensure reliable delivery.
+
+Security Features: Some security features, like DNS over TLS (DoT) and DNS over HTTPS (DoH), use TCP to provide encrypted communication.
+
+So, while UDP is the default choice due to its speed and efficiency for most DNS queries, TCP is also utilized when necessary to accommodate larger or more secure data transfers.
 
 
