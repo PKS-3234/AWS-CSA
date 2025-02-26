@@ -42,5 +42,5 @@ Router: Connects networks together.  
 Essentially, switches handle local traffic, while routers handle traffic between networks.   
 
 
-Sources and related content
+
   
