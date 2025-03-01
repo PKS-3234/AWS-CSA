@@ -54,3 +54,17 @@ Key Takeaways
 - Each layer has specific functions and protocols.
 - The OSI model enables data communication between devices.
 - Understanding the OSI model is crucial for networking concepts and troubleshooting."
+
+- ------------------------------------------------------------------------------------------------------------------------
+
+The OSI (Open Systems Interconnection) Model is a set of rules that explains how different computer systems communicate over a network. OSI Model was developed by the International Organization for Standardization (ISO)
+The OSI Model consists of 7 layers and each layer has specific functions and responsibilities. This layered approach makes it easier for different devices and technologies to work together
+OSI Model provides a clear structure for data transmission and managing network issues. The OSI Model is widely used as a reference to understand how network systems function.
+
+Layer 1 – Physical Layer
+The lowest layer of the OSI reference model is the Physical Layer. It is responsible for the actual physical connection between the devices.
+The physical layer contains information in the form of bits. Physical Layer is responsible for transmitting individual bits from one node to the next.
+When receiving data, this layer will get the signal received and convert it into 0s and 1s and send them to the Data Link layer, which will put the frame back together
+Common physical layer devices are Hub, Repeater, Modem, and Cables.
+
+
